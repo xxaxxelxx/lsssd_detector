@@ -6,7 +6,7 @@ db_host = argv(2)
 db_port = argv(3)
 db_pass = argv(4)
 
-id=list.hd(get_process_lines('echo #{url}'))
+id = "#{url}"
 id = string.replace(pattern='\/', fun(_) -> "_" , id)
 id = string.replace(pattern='\:', fun(_) -> "_" , id)
 id = string.replace(pattern='\.', fun(_) -> "_" , id)
