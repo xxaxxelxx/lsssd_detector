@@ -1,0 +1,38 @@
+# MAIN SETTINGS ########################################################
+#rescue = single("/var/icecast/web/#{c_id}-#{c_channel}_rescue.mp3")
+#devnull = single("/dev/null")
+set("log.stdout", false)
+set("log.file.path", "/var/log/liquidsoap/#{id}.log")
+set("log.file.append",true)
+set("log.level",2)
+set("init.daemon.pidfile.path","/var/run/liquidsoap/#{id}.pid")
+set("decoder.file_decoders",["MAD"])
+set("decoder.stream_decoders",["MAD"])
+
+# SILENCE LIMIT SECONDS
+# FLOAT ONLY - DOT NEEDED! 
+# 5.0 OR 5. OR ...
+max_silence=5.0
+
+# DATABASE ACCESS TIMEOUT SECONDS
+# INTEGERS ONLY - NO DOTS OR COMMAS 
+db_timeout=5
+
+# ALIVE TIME RANGE SECONDS
+# FLOAT ONLY - DOT NEEDED! 
+# 10.0 OR 10. OR ...
+alive_interval=10.0
+
+# MAXIMUM RUNTIME - SHUTDOWN AFTER XY SECONDS
+# FLOAT ONLY - DOT NEEDED!
+# 0.0 OR 0. DISABLES SHUTDOWN
+# 3600.0 OR 3600. OR 0. OR 0.0 OR ...
+max_runtime=0.0
+
+
+status_dir = "/var/tmp/liquidsilence/#{id}"
+status_src = "#{status_dir}/src"
+#status_alive = "#{status_dir}/alive"
+logging_dir = "/var/log/liquidsilence"
+logging_file = "#{logging_dir}/#{id}.log"
+##############################################################################

@@ -1,0 +1,2 @@
+output.dummy(fallible=true, stream)
+#output.dummy2(fallible=true, stream2)
