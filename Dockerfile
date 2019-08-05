@@ -9,6 +9,7 @@ RUN apt-get -qq -y dist-upgrade
 
 RUN apt-get -qq -y install mc
 RUN apt-get install -y mariadb-client
+RUN apt-get install -y sudo
 RUN apt-get install -y liquidsoap
 # clean up
 RUN apt-get clean
