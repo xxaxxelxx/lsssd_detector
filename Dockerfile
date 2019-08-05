@@ -18,6 +18,7 @@ RUN test -d "/var/run/liquidsoap" || ( mkdir -p /var/run/liquidsoap && chown liq
 RUN test -d "/var/log/liquidsilence" || ( mkdir -p /var/log/liquidsilence && chown liquidsoap:liquidsoap /var/log/liquidsilence )
 
 COPY liquidsoap/* /etc/liquidsoap/
+COPY test.sh /test.sh
 COPY get_cpuload.sh /get_cpuload.sh
 COPY get_nload.sh /get_nload.sh
 COPY detectorrunner.sh /detectorrunner.sh
