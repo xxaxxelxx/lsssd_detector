@@ -29,10 +29,13 @@ alive_interval=10.0
 # 3600.0 OR 3600. OR 0. OR 0.0 OR ...
 max_runtime=0.0
 
-
+# STATUS
+status_enabled = true
 status_dir = "/var/tmp/liquidsilence/#{id}"
 status_src = "#{status_dir}/src"
-#status_alive = "#{status_dir}/alive"
+
+#LOGGING
+logging_enabled = false
 logging_dir = "/var/log/liquidsilence"
 logging_file = "#{logging_dir}/#{id}.log"
 ##############################################################################

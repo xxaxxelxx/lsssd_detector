@@ -2,11 +2,16 @@
 # FUNCTIONS
 
 def to_signal(old,new)
-  system("echo \"signal $(date \"+%s\")\" > #{status_src}")
-  system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Signal detected.\" >> #{logging_file}")
-
+    if status_enabled = true then
+	system("echo \"signal $(date \"+%s\")\" > #{status_src}")
+    end
+    if logging_enabled = true then
+	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Signal detected.\" >> #{logging_file}")
+    end
     if test_process(strg_sql_set_sound) == true then
-	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL #{url} reported to #{db_host} as sounding.\" >> #{logging_file}")
+	if logging_enabled = true then
+	    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL #{url} reported to #{db_host} as sounding.\" >> #{logging_file}")
+	end
     end
 
   out = add(normalize=false,
@@ -16,11 +21,16 @@ def to_signal(old,new)
 end
 
 def to_silence(old,new)
-  system("echo \"silence $(date \"+%s\")\" > #{status_src}")
-  system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Sound of Silence detected.\" >> #{logging_file}")
-
+    if status_enabled = true then
+	system("echo \"silence $(date \"+%s\")\" > #{status_src}")
+    end
+    if logging_enabled = true then
+	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Sound of Silence detected.\" >> #{logging_file}")
+    end
     if test_process(strg_sql_set_silent) == true then
-	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL #{url} reported to #{db_host} as silent.\" >> #{logging_file}")
+	if logging_enabled = true then
+	    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL #{url} reported to #{db_host} as silent.\" >> #{logging_file}")
+	end
     end
 
   out = add(normalize=false,
@@ -29,52 +39,47 @@ def to_silence(old,new)
   out
 end
 
-#def is_alive()
-#  system("echo \"alive $(date \"+%s\")\" > #{status_alive}")
-#
-#    if test_process(strg_sql_set_alive) == true then
-#	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL #{url} reported as alive.\" >> #{logging_file}")
-#    end
-#
-#  alive_interval
-#end
-
 def test_parallelprocess()
     if test_process(strg_sql_parallel_process) == true then
-	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Parallel process found in database. Shutting down #{url}.\" >> #{logging_file}")
-	shutdown()
-    else
-	#system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | No parallel process found in database. Keeping up #{url}.\" >> #{logging_file}")
-	if test_process(strg_sql_set_alive) == true then
-	    system("echo > /dev/null")
-	    #system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL #{url} reported as alive.\" >> #{logging_file}")
+        if logging_enabled = true then
+	    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Parallel process found in database. Shutting down #{url}.\" >> #{logging_file}")
 	end
+	shutdown()
     end
-
     alive_interval
 end
 
 def test_validmntpnt()
     if test_process(strg_sql_valid_mntpnt) != true then
-	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL not found in database. Shutting down #{url}.\" >> #{logging_file}")
+	if logging_enabled = true then
+	    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL not found in database. Shutting down #{url}.\" >> #{logging_file}")
+	end
 	shutdown()
-    #else
-	#system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL found in database. Keeping up #{url}.\" >> #{logging_file}")
     end
     alive_interval
 end
 
 def do_shutdown()
-    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Maximum runtime #{max_runtime} reached. Shutting down #{url}.\" >> #{logging_file}")
+    if logging_enabled = true then
+	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Maximum runtime #{max_runtime} reached. Shutting down #{url}.\" >> #{logging_file}")
+    end
     shutdown()
     max_runtime
 end
 
-system("test -d #{status_dir} || mkdir -p #{status_dir}")
-system("test -d #{logging_dir} || mkdir -p #{logging_dir}")
+if status_enabled = true then
+    system("test -d #{status_dir} || mkdir -p #{status_dir}")
+end
+if logging_enabled = true then
+    system("test -d #{logging_dir} || mkdir -p #{logging_dir}")
+end
 
-system("echo \"signal $(date \"+%s\")\" > #{status_src}")
-system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Starting #{url}. Signal assumed.\" >> #{logging_file}")
+if status_enabled = true then
+    system("echo \"signal $(date \"+%s\")\" > #{status_src}")
+end
+if logging_enabled = true then
+    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Starting #{url}. Signal assumed.\" >> #{logging_file}")
+end
 
 # END
 #####
