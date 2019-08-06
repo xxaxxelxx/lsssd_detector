@@ -19,13 +19,14 @@ strg_sql_valid_mntpnt="echo \"select status from status where mntpnt = '#{url}';
 strg_sql_set_silent="echo \"update status set since = UNIX_TIMESTAMP(), status = 1 where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
 strg_sql_set_sound="echo \"update status set since = UNIX_TIMESTAMP(), status = 0 where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
 strg_sql_set_alive="echo \"update status set alive = UNIX_TIMESTAMP() where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
+strg_sql_set_alive_atstart="echo \"update status set alive = UNIX_TIMESTAMP(), since = UNIX_TIMESTAMP() where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
 
 ##################################################################################################################################
 input = mksafe(input.http(url))
 
 %include "functions.sys"
 
-system(strg_sql_set_alive)
+system(strg_sql_set_alive_atstart)
 
 add_timeout(fast=false,alive_interval,test_validmntpnt)
 add_timeout(fast=false,alive_interval,test_parallelprocess)
