@@ -41,10 +41,13 @@ while true; do
 
 	# TEST FOR CPU LOAD
 	CPULOAD=$(./get_cpuload.sh /host/proc)
+echo $CPULOAD %
 	test "x$CPULOAD" == "x" && sleep 1 && break
 	test $CPULOAD -gt $MAXCPULOAD && sleep 60 && break
+echo $CPULOAD %%
 
-	sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -d -- $C_MNTPNT $DB_HOST $DB_PORT $DB_PASS $ALIVE_LIMIT && echo "$C_MNTPNT started"
+
+#	sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -d -- $C_MNTPNT $DB_HOST $DB_PORT $DB_PASS $ALIVE_LIMIT && echo "$C_MNTPNT started"
 	sleep 1
     done 
     sleep 1
@@ -52,7 +55,5 @@ done
 
 exit $?
 
-#while true; do sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -- http://broadcast.ir-media-tec.com/bbradio-ch08.mp3 192.168.100.123 3306 rfc1830; done
-#while true; do sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -- http://ir-media.hoerradar.de/bbradio-xmas-mp3-hq 192.168.100.123 3306 rfc1830; done
 
 #END
