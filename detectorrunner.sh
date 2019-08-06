@@ -1,28 +1,31 @@
 #!/bin/bash
-test  $# -lt 7 && \
-    echo "usage:   $(basename $0) INTERFACE MAXNETLOADPERCENT MAXCPULOADPERCENT DB_HOST DB_PORT DB_PASS ALIVE_LIMIT" && \
-    echo "example: $(basename $0) ens3 50 30 192.168.99.99 3306 trallala 10.0" && \
+test  $# -lt 8 && \
+    echo "usage:   $(basename $0) INTERFACE INTERFACESPEEDMBIT MAXNETLOADPERCENT MAXCPULOADPERCENT DB_HOST DB_PORT DB_PASS ALIVE_LIMIT" && \
+    echo "example: $(basename $0) ens3 1000 50 30 192.168.99.99 3306 trallala 10.0" && \
     exit 1
 
 CIF=$1
 test "x$CIF" == "x" && exit 1
 
-MAXNETLOAD=$2
+CIF_SPEED=$2
+test "x$CIF_SPEED" == "x" && exit 1
+
+MAXNETLOAD=$3
 test "x$MAXNETLOAD" == "x" && exit 1
 
-MAXCPULOAD=$3
+MAXCPULOAD=$4
 test "x$MAXCPULOAD" == "x" && exit 1
 
-DB_HOST=$4
+DB_HOST=$5
 test "x$DB_HOST" == "x" && exit 1
 
-DB_PORT=$5
+DB_PORT=$6
 test "x$DB_PORT" == "x" && exit 1
 
-DB_PASS=$6
+DB_PASS=$7
 test "x$DB_PASS" == "x" && exit 1
 
-ALIVE_LIMIT=$7
+ALIVE_LIMIT=$8
 test "x$ALIVE_LIMIT" == "x" && exit 1
 
 test -d "/var/run/liquidsoap" || (mkdir -p "/var/run/liquidsoap" && chown liquidsoap "/var/run/liquidsoap")
@@ -34,6 +37,9 @@ while true; do
     for C_MNTPNT in $C_MNTPNTLIST; do
 
 	# TEST FOR NETWORK LOAD
+	NETLOAD=$(./get_nload.sh /host/sys $CIF $CIF_SPEED rx)
+	test "x$NETLOAD" == "x" && sleep 1 && break
+	test $NETLOAD -gt $MAXNETLOAD && sleep 1 && break
 
 	# TEST FOR CPU LOAD
 	CPULOAD=$(./get_cpuload.sh /host/proc)
@@ -48,5 +54,6 @@ done
 
 exit $?
 
-
-#END
+# AXXEL.NET
+# 2019AUG06
+# END
