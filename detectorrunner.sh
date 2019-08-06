@@ -1,8 +1,4 @@
 #!/bin/bash
-HOME="/usr/local/homegrown/liquidsilence"
-test -d "$HOME" || exit 1
-cd "$HOME"
-
 test  $# -lt 7 && \
     echo "usage:   $(basename $0) INTERFACE MAXNETLOADPERCENT MAXCPULOADPERCENT DB_HOST DB_PORT DB_PASS ALIVE_LIMIT" && \
     echo "example: $(basename $0) ens3 50 30 192.168.99.99 3306 trallala 10.0" && \
@@ -26,7 +22,7 @@ test "x$DB_PORT" == "x" && exit 1
 DB_PASS=$6
 test "x$DB_PASS" == "x" && exit 1
 
-ALIVE_LIMIT=$9
+ALIVE_LIMIT=$7
 test "x$ALIVE_LIMIT" == "x" && exit 1
 
 test -d "/var/run/liquidsoap" || (mkdir -p "/var/run/liquidsoap" && chown liquidsoap "/var/run/liquidsoap")
@@ -41,13 +37,10 @@ while true; do
 
 	# TEST FOR CPU LOAD
 	CPULOAD=$(./get_cpuload.sh /host/proc)
-echo $CPULOAD %
 	test "x$CPULOAD" == "x" && sleep 1 && break
 	test $CPULOAD -gt $MAXCPULOAD && sleep 60 && break
-echo $CPULOAD %%
 
-
-#	sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -d -- $C_MNTPNT $DB_HOST $DB_PORT $DB_PASS $ALIVE_LIMIT && echo "$C_MNTPNT started"
+	sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -d -- $C_MNTPNT $DB_HOST $DB_PORT $DB_PASS $ALIVE_LIMIT
 	sleep 1
     done 
     sleep 1
