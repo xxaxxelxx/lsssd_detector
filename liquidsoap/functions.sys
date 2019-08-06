@@ -44,17 +44,11 @@ def test_parallelprocess()
 	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Parallel process found in database. Shutting down #{url}.\" >> #{logging_file}")
 	shutdown()
     else
-#	if test_process(strg_sql_set_alive) == true then
-#	    system("echo > /dev/null")
-#	end
 	system(strg_sql_set_alive)
     end
 
     alive_interval
 end
-
-
-
 
 def test_validmntpnt()
     if test_process(strg_sql_valid_mntpnt) != true then
