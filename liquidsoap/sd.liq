@@ -5,7 +5,6 @@ url = argv(1)
 db_host = argv(2)
 db_port = argv(3)
 db_pass = argv(4)
-alive_interval=argv(5)
 
 id = "#{url}"
 id = string.replace(pattern='\/', fun(_) -> "_" , id)
@@ -19,7 +18,6 @@ strg_sql_valid_mntpnt="echo \"select status from status where mntpnt = '#{url}';
 strg_sql_set_silent="echo \"update status set since = UNIX_TIMESTAMP(), status = 1 where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
 strg_sql_set_sound="echo \"update status set since = UNIX_TIMESTAMP(), status = 0 where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
 strg_sql_set_alive="echo \"update status set alive = UNIX_TIMESTAMP() where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
-
 
 ##################################################################################################################################
 input = mksafe(input.http(url))
