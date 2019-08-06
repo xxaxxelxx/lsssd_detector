@@ -5,7 +5,7 @@ url = argv(1)
 db_host = argv(2)
 db_port = argv(3)
 db_pass = argv(4)
-alive_interval= argv(5)
+alive_interval = float_of_string(argv(5))
 
 id = "#{url}"
 id = string.replace(pattern='\/', fun(_) -> "_" , id)
