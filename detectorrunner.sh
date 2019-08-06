@@ -38,7 +38,7 @@ while true; do
 	# TEST FOR CPU LOAD
 	CPULOAD=$(./get_cpuload.sh /host/proc)
 	test "x$CPULOAD" == "x" && sleep 1 && break
-	test $CPULOAD -gt $MAXCPULOAD && sleep 60 && break
+	test $CPULOAD -gt $MAXCPULOAD && sleep 1 && break
 
 	sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -d -- $C_MNTPNT $DB_HOST $DB_PORT $DB_PASS $ALIVE_LIMIT
 	sleep 1
