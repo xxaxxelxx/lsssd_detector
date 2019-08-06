@@ -25,6 +25,8 @@ input = mksafe(input.http(url))
 
 %include "functions.sys"
 
+system(strg_sql_set_alive)
+
 add_timeout(fast=false,alive_interval,test_validmntpnt)
 add_timeout(fast=false,alive_interval,test_parallelprocess)
 
