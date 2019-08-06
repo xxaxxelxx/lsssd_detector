@@ -21,7 +21,7 @@ db_timeout=5
 # ALIVE TIME RANGE SECONDS
 # FLOAT ONLY - DOT NEEDED! 
 # 10.0 OR 10. OR ...
-alive_interval=10.0
+#alive_interval=10.0
 
 # MAXIMUM RUNTIME - SHUTDOWN AFTER XY SECONDS
 # FLOAT ONLY - DOT NEEDED!
