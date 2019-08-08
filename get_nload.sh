@@ -16,7 +16,7 @@ IF="$2"
 IFSPEED="$3"
 RXTX="$4"
 
-echo $IFSPEED
+#echo $IFSPEED
 
 if [ ! -r "${SYSCLASSNET}/${IF}" ]; then
     echo "There is no interface like $IF."

@@ -45,6 +45,8 @@ while true; do
 	CPULOAD=$(./get_cpuload.sh /host/proc)
 	test "x$CPULOAD" == "x" && sleep 1 && break
 	test $CPULOAD -gt $MAXCPULOAD && sleep 1 && break
+	
+	echo "$ALIVE_LIMIT" | grep '\.' > /dev/null || ALIVE_LIMIT="${ALIVE_LIMIT}.0"
 
 	sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -d -- $C_MNTPNT $DB_HOST $DB_PORT $DB_PASS $ALIVE_LIMIT
 	sleep 1
