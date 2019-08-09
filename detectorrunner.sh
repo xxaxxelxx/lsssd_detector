@@ -37,7 +37,7 @@ while true; do
     for C_MNTPNT in $C_MNTPNTLIST; do
 
 	# TEST FOR MEM
-	./get_mem.sh
+	./get_mem.sh /host/proc
 	if [ $? -ne 0 ]; then
 	    sleep 10
 	    break
