@@ -45,6 +45,8 @@ while true; do
 	CPULOAD=$(./get_cpuload.sh /host/proc)
 	test "x$CPULOAD" == "x" && sleep 1 && break
 	test $CPULOAD -gt $MAXCPULOAD && sleep 1 && break
+
+	echo "$CPULOAD vs $MAXCPULOAD" >> /CPU
 	
 	echo "$ALIVE_LIMIT" | grep '\.' > /dev/null || ALIVE_LIMIT="${ALIVE_LIMIT}.0"
 
