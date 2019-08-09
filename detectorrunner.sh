@@ -36,10 +36,17 @@ while true; do
 
     for C_MNTPNT in $C_MNTPNTLIST; do
 
+	# TEST FOR MEM
+	./get_mem.sh
+	if [ $? -ne 0 ]; then
+	    sleep 10
+	    break
+	fi
+
 	# TEST FOR NETWORK LOAD
 	NETLOAD=$(./get_nload.sh /host/sys $CIF $CIF_SPEED rx)
-	test "x$NETLOAD" == "x" && sleep 10 && break
-	test $NETLOAD -gt $MAXNETLOAD && sleep 10 && break
+	test "x$NETLOAD" == "x" && sleep 10 && break 2
+	test $NETLOAD -gt $MAXNETLOAD && sleep 10 && break 2
 
 	# TEST FOR CPU LOAD
 	NOCMAX=3;NOC=0
