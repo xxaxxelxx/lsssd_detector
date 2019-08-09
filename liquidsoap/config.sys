@@ -6,8 +6,8 @@ set("log.file.path", "/var/log/liquidsoap/#{id}.log")
 set("log.file.append",true)
 set("log.level",2)
 set("init.daemon.pidfile.path","/var/run/liquidsoap/#{id}.pid")
-set("decoder.file_decoders",["MAD"])
-set("decoder.stream_decoders",["MAD"])
+#set("decoder.file_decoders",["MAD"])
+#set("decoder.stream_decoders",["MAD"])
 
 # SILENCE LIMIT SECONDS
 # FLOAT ONLY - DOT NEEDED! 
