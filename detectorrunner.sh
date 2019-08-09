@@ -46,7 +46,7 @@ while true; do
 	while true; do
 	    CPULOAD=$(./get_cpuload.sh /host/proc)
 	    test "x$CPULOAD" == "x" && sleep 10 && break 3
-	    test $CPULOAD -gt $MAXCPULOAD && echo "$CPULOAD vs $MAXCPULOAD" >> /CPU
+	    #test $CPULOAD -gt $MAXCPULOAD && echo "$CPULOAD vs $MAXCPULOAD" >> /CPU
 	    test $CPULOAD -gt $MAXCPULOAD && sleep 10 && break 3
 	    ((NOC++))
 	    test $NOC -ge $NOCMAX && break
