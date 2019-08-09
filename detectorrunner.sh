@@ -42,11 +42,15 @@ while true; do
 	test $NETLOAD -gt $MAXNETLOAD && sleep 1 && break
 
 	# TEST FOR CPU LOAD
-	CPULOAD=$(./get_cpuload.sh /host/proc)
-	test "x$CPULOAD" == "x" && sleep 1 && break
-	test $CPULOAD -gt $MAXCPULOAD && sleep 1 && break
-
-	echo "$CPULOAD vs $MAXCPULOAD" >> /CPU
+	NOCMAX=3;NOC=0
+	while true; do
+	    CPULOAD=$(./get_cpuload.sh /host/proc)
+	    test "x$CPULOAD" == "x" && sleep 1 && break 3
+echo "$CPULOAD vs $MAXCPULOAD" >> /CPU
+	    test $CPULOAD -gt $MAXCPULOAD && sleep 1 && break 3
+	    ((NOC++))
+	    test $NOC -ge $NOCMAX && break
+	done
 	
 	echo "$ALIVE_LIMIT" | grep '\.' > /dev/null || ALIVE_LIMIT="${ALIVE_LIMIT}.0"
 
