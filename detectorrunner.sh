@@ -38,16 +38,16 @@ while true; do
 
 	# TEST FOR NETWORK LOAD
 	NETLOAD=$(./get_nload.sh /host/sys $CIF $CIF_SPEED rx)
-	test "x$NETLOAD" == "x" && sleep 1 && break
-	test $NETLOAD -gt $MAXNETLOAD && sleep 1 && break
+	test "x$NETLOAD" == "x" && sleep 10 && break
+	test $NETLOAD -gt $MAXNETLOAD && sleep 10 && break
 
 	# TEST FOR CPU LOAD
 	NOCMAX=3;NOC=0
 	while true; do
 	    CPULOAD=$(./get_cpuload.sh /host/proc)
-	    test "x$CPULOAD" == "x" && sleep 1 && break 3
+	    test "x$CPULOAD" == "x" && sleep 10 && break 3
 	    test $CPULOAD -gt $MAXCPULOAD && echo "$CPULOAD vs $MAXCPULOAD" >> /CPU
-	    test $CPULOAD -gt $MAXCPULOAD && sleep 1 && break 3
+	    test $CPULOAD -gt $MAXCPULOAD && sleep 10 && break 3
 	    ((NOC++))
 	    test $NOC -ge $NOCMAX && break
 	done
@@ -55,7 +55,7 @@ while true; do
 	echo "$ALIVE_LIMIT" | grep '\.' > /dev/null || ALIVE_LIMIT="${ALIVE_LIMIT}.0"
 
 	sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -d -- $C_MNTPNT $DB_HOST $DB_PORT $DB_PASS $ALIVE_LIMIT
-	sleep 20
+	sleep 6
     done 
     sleep 1
 done
