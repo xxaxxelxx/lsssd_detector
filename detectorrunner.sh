@@ -51,7 +51,7 @@ while true; do
 	echo "$ALIVE_LIMIT" | grep '\.' > /dev/null || ALIVE_LIMIT="${ALIVE_LIMIT}.0"
 
 	sudo -u liquidsoap liquidsoap /etc/liquidsoap/sd.liq -d -- $C_MNTPNT $DB_HOST $DB_PORT $DB_PASS $ALIVE_LIMIT
-	sleep 1
+	sleep 5
     done 
     sleep 1
 done
