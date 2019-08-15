@@ -36,6 +36,11 @@ How to start:
 * ```./run_init_detector.sh``` on a DETECTOR.
 You have to set some passwords, be sure they correspond on both MASTER and DETECTOR.
 
+Attention: ./run_prune.sh cleans all to the bones. But that's not a problem.
+
+Save your active WATCHLIST file to a secure (local) place and then you can easily prune both the master and the detector and run the ./run_init_... scripts afterwards. The whole system will be rebuilt.
+Don't forget to upload your local WATCHLIST file to the MASTER afterwards.
+
 Thats all. ;)
 
 If you need some help do not hesitate and ask me anything (project related ;): x@axxel.net
