@@ -2,6 +2,7 @@
 #rescue = single("/var/icecast/web/#{c_id}-#{c_channel}_rescue.mp3")
 #devnull = single("/dev/null")
 set("log.stdout", false)
+set("log.file", false)
 set("log.file.path", "/var/log/liquidsoap/#{id}.log")
 set("log.file.append",true)
 set("log.level",2)

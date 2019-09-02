@@ -41,7 +41,9 @@ end
 
 def test_parallelprocess()
     if test_process(strg_sql_parallel_process) == true then
-	system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Parallel process found in database. Shutting down #{url}.\" >> #{logging_file}")
+	if logging_enabled == true then
+	    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Parallel process found in database. Shutting down #{url}.\" >> #{logging_file}")
+	end
 	shutdown()
     else
 	system(strg_sql_set_alive)
