@@ -32,7 +32,7 @@ test -d "/var/run/liquidsoap" || (mkdir -p "/var/run/liquidsoap" && chown liquid
 
 while true; do
     # STARTUP
-    C_MNTPNTLIST="$(echo "SELECT mntpnt FROM status WHERE (UNIX_TIMESTAMP() - $ALIVE_LIMIT > alive);" | mysql -u detector -p$DB_PASS -h $DB_HOST -P $DB_PORT -D silenceDB --skip-column-names --connect-timeout=10)" #"
+    C_MNTPNTLIST="$(echo "SELECT mntpnt FROM status WHERE (UNIX_TIMESTAMP() - $ALIVE_LIMIT > alive + 10);" | mysql -u detector -p$DB_PASS -h $DB_HOST -P $DB_PORT -D silenceDB --skip-column-names --connect-timeout=10)" #"
 
     for C_MNTPNT in $C_MNTPNTLIST; do
 
