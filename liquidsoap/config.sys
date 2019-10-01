@@ -30,6 +30,7 @@ db_timeout=5
 # 3600.0 OR 3600. OR 0. OR 0.0 OR ...
 max_runtime=0.0
 shutdown_when_silent_for=300.0
+return_timer_exit=-1.0
 
 # STATUS
 status_enabled = true
