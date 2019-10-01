@@ -32,6 +32,9 @@ def to_silence(old,new)
 	    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | URL #{url} reported to #{db_host} as silent.\" >> #{logging_file}")
 	end
     end
+    if shutdown_when_silent_for > 0.0 then
+	add_timeout(fast=false,shutdown_when_silent_for,do_shutdown_when_silent)
+    end
 
   out = add(normalize=false,
       [ fade.initial(duration=5.,new),
@@ -68,6 +71,17 @@ def do_shutdown()
     end
     shutdown()
     max_runtime
+end
+
+def do_shutdown_when_silent()
+    if test_process(strg_sql_is_silent) == true then
+	if logging_enabled == true then
+	    system("echo \"$(date \"+%Y-%m-%d %H:%M:%S\") | Maximum runtime after switching to silent #{shutdown_when_silent_for} reached. Shutting down #{url}.\" >> #{logging_file}")
+	end
+	shutdown()
+    end
+    #shutdown_when_silent_for
+    -1
 end
 
 if status_enabled == true then

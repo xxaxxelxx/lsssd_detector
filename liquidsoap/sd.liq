@@ -16,6 +16,7 @@ id = string.replace(pattern='\.', fun(_) -> "_" , id)
 
 strg_sql_parallel_process="echo \"select status from status where mntpnt = '#{url}' and ((UNIX_TIMESTAMP() - #{alive_interval}) < alive);\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout} | grep -e 0 -e 1 > /dev/null"
 strg_sql_valid_mntpnt="echo \"select status from status where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout} | grep -e 0 -e 1 -e 2 > /dev/null"
+strg_sql_is_silent="echo \"select status from status where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout} | grep -e 1 -e 2 > /dev/null"
 strg_sql_set_silent="echo \"update status set since = UNIX_TIMESTAMP(), status = 1 where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
 strg_sql_set_sound="echo \"update status set since = UNIX_TIMESTAMP(), status = 0 where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
 strg_sql_set_alive="echo \"update status set alive = UNIX_TIMESTAMP() where mntpnt = '#{url}';\" | mysql -u detector -p#{db_pass} -D silenceDB -h #{db_host} -P #{db_port} --connect-timeout=#{db_timeout}"
